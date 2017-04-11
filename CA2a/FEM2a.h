@@ -210,12 +210,12 @@ void FEM<dim>::define_boundary_conds() {
 
     const unsigned int totalNodes = dof_handler.n_dofs(); //Total number of nodes
     const double c0 = 1.0 / 3.0;
-    const double c0_top = 7.0;
+    const double c0_top = 8.0;
     for (int globalNodeIndex = 0; globalNodeIndex < totalNodes; globalNodeIndex++) {
         if (nodeLocation[globalNodeIndex][1] == 0) {
             boundary_values[globalNodeIndex] = 300.0 * (1 + c0 * nodeLocation[globalNodeIndex][0]);
         } else if (nodeLocation[globalNodeIndex][1] == 0.08) {
-            boundary_values[globalNodeIndex] = 300.0 * (1 + c0_top * nodeLocation[globalNodeIndex][0]);
+            boundary_values[globalNodeIndex] = 310.0 * (1 + c0_top * nodeLocation[globalNodeIndex][0] * nodeLocation[globalNodeIndex][0]);
         }
     }
 }
@@ -251,6 +251,32 @@ void FEM<dim>::setup_system() {
     D.reinit (dof_handler.n_dofs());
 
     //Define quadrature rule - again, you decide what quad rule is needed
+
+        // cout << "basis function order == 3" <<endl;
+    // quadRule = 4; //EDIT - Number of quadrature points along one dimension
+    // quad_points.resize(quadRule); quad_weight.resize(quadRule);
+
+    // quad_points[0] = -sqrt(3.0 / 7.0 + (2.0 / 7.0) * sqrt(6.0 / 5.0)); //EDIT
+    // quad_points[1] = -sqrt(3.0 / 7.0 - (2.0 / 7.0) * sqrt(6.0 / 5.0)); //EDIT
+    // quad_points[2] = sqrt(3.0 / 7.0 - (2.0 / 7.0) * sqrt(6.0 / 5.0));
+    // quad_points[3] = sqrt(3.0 / 7.0 + (2.0 / 7.0) * sqrt(6.0 / 5.0));
+
+    // quad_weight[0] = (18.0 - sqrt(30.0)) / 36.0; //EDIT
+    // quad_weight[1] = (18.0 + sqrt(30.0)) / 36.0; //EDIT
+    // quad_weight[2] = (18.0 + sqrt(30.0)) / 36.0;
+    // quad_weight[3] = (18.0 - sqrt(30.0)) / 36.0;
+
+    // quadRule = 3; //EDIT - Number of quadrature points along one dimension
+    // quad_points.resize(quadRule); quad_weight.resize(quadRule);
+
+    // quad_points[0] = -sqrt(3.0 / 5.0); //EDIT
+    // quad_points[1] = 0; //EDIT
+    // quad_points[2] = sqrt(3.0 / 5.0);
+
+    // quad_weight[0] = 5.0 / 9.0; //EDIT
+    // quad_weight[1] = 8.0 / 9.0; //EDIT
+    // quad_weight[2] = 5.0 / 9.0; //EDIT
+#if 1
     quadRule = 2; //EDIT - Number of quadrature points along one dimension
     quad_points.resize(quadRule); quad_weight.resize(quadRule);
 
@@ -259,7 +285,16 @@ void FEM<dim>::setup_system() {
 
     quad_weight[0] = 1.; //EDIT
     quad_weight[1] = 1.; //EDIT
+#endif
 
+#if 0
+    quadRule = 1; //EDIT - Number of quadrature points along one dimension
+    quad_points.resize(quadRule); quad_weight.resize(quadRule);
+
+    quad_points[0] = -sqrt(0); //EDIT
+
+    quad_weight[0] = 2.0; //EDIT
+#endif
     //Just some notes...
     std::cout << "   Number of active elems:       " << triangulation.n_active_cells() << std::endl;
     std::cout << "   Number of degrees of freedom: " << dof_handler.n_dofs() << std::endl;
@@ -345,7 +380,7 @@ void FEM<dim>::assemble_system() {
                                         Klocal[A][B] += detJ * kappa[I][J] * \
                                                         (basis_gradient(A, quad_points[q1], quad_points[q2]))[i] * invJacob[i][I] * \
                                                         (basis_gradient(B, quad_points[q1], quad_points[q2]))[j] * invJacob[j][J] * \
-                                                        quad_weight[i] * quad_weight[j];
+                                                        quad_weight[q1] * quad_weight[q2];
 
                                     }
                                 }
