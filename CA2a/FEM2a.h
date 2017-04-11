@@ -266,16 +266,16 @@ void FEM<dim>::setup_system() {
     // quad_weight[2] = (18.0 + sqrt(30.0)) / 36.0;
     // quad_weight[3] = (18.0 - sqrt(30.0)) / 36.0;
 
-    // quadRule = 3; //EDIT - Number of quadrature points along one dimension
-    // quad_points.resize(quadRule); quad_weight.resize(quadRule);
+//     quadRule = 3; //EDIT - Number of quadrature points along one dimension
+//     quad_points.resize(quadRule); quad_weight.resize(quadRule);
 
-    // quad_points[0] = -sqrt(3.0 / 5.0); //EDIT
-    // quad_points[1] = 0; //EDIT
-    // quad_points[2] = sqrt(3.0 / 5.0);
+//     quad_points[0] = -sqrt(3.0 / 5.0); //EDIT
+//     quad_points[1] = 0; //EDIT
+//     quad_points[2] = sqrt(3.0 / 5.0);
 
-    // quad_weight[0] = 5.0 / 9.0; //EDIT
-    // quad_weight[1] = 8.0 / 9.0; //EDIT
-    // quad_weight[2] = 5.0 / 9.0; //EDIT
+//     quad_weight[0] = 5.0 / 9.0; //EDIT
+//     quad_weight[1] = 8.0 / 9.0; //EDIT
+//     quad_weight[2] = 5.0 / 9.0; //EDIT
 #if 1
     quadRule = 2; //EDIT - Number of quadrature points along one dimension
     quad_points.resize(quadRule); quad_weight.resize(quadRule);
@@ -291,7 +291,7 @@ void FEM<dim>::setup_system() {
     quadRule = 1; //EDIT - Number of quadrature points along one dimension
     quad_points.resize(quadRule); quad_weight.resize(quadRule);
 
-    quad_points[0] = -sqrt(0); //EDIT
+    quad_points[0] = 0.0; //EDIT
 
     quad_weight[0] = 2.0; //EDIT
 #endif
@@ -377,7 +377,7 @@ void FEM<dim>::assemble_system() {
                                     for (unsigned int J = 0; J < dim; J++) {
                                         //EDIT - Define Klocal. You will need to use the inverse Jacobian ("invJacob") and "detJ"
 
-                                        Klocal[A][B] += detJ * kappa[I][J] * \
+                                        Klocal[A][B] -= detJ * kappa[I][J] * \
                                                         (basis_gradient(A, quad_points[q1], quad_points[q2]))[i] * invJacob[i][I] * \
                                                         (basis_gradient(B, quad_points[q1], quad_points[q2]))[j] * invJacob[j][J] * \
                                                         quad_weight[q1] * quad_weight[q2];

@@ -290,14 +290,14 @@ void FEM<dim>::setup_system() {
     F.reinit (dof_handler.n_dofs());
     D.reinit (dof_handler.n_dofs());
 
-    quadRule = 2; //EDIT - Number of quadrature points along one dimension
-    quad_points.resize(quadRule); quad_weight.resize(quadRule);
+    // quadRule = 2; //EDIT - Number of quadrature points along one dimension
+    // quad_points.resize(quadRule); quad_weight.resize(quadRule);
 
-    quad_points[0] = -sqrt(1. / 3.); //EDIT
-    quad_points[1] = sqrt(1. / 3.); //EDIT
+    // quad_points[0] = -sqrt(1. / 3.); //EDIT
+    // quad_points[1] = sqrt(1. / 3.); //EDIT
 
-    quad_weight[0] = 1.; //EDIT
-    quad_weight[1] = 1.; //EDIT
+    // quad_weight[0] = 1.; //EDIT
+    // quad_weight[1] = 1.; //EDIT
     // quadRule = 4; //EDIT - Number of quadrature points along one dimension
     // quad_points.resize(quadRule); quad_weight.resize(quadRule);
 
@@ -310,7 +310,7 @@ void FEM<dim>::setup_system() {
     // quad_weight[1] = (18.0 + sqrt(30.0)) / 36.0; //EDIT
     // quad_weight[2] = (18.0 + sqrt(30.0)) / 36.0;
     // quad_weight[3] = (18.0 - sqrt(30.0)) / 36.0;
-#if 0
+
     quadRule = 3; //EDIT - Number of quadrature points along one dimension
     quad_points.resize(quadRule); quad_weight.resize(quadRule);
 
@@ -321,7 +321,7 @@ void FEM<dim>::setup_system() {
     quad_weight[0] = 5.0 / 9.0; //EDIT
     quad_weight[1] = 8.0 / 9.0; //EDIT
     quad_weight[2] = 5.0 / 9.0; //EDIT
-
+#if 0
     //Define quadrature rule - again, you decide what quad rule is needed
     quadRule = 2; //EDIT - Number of quadrature points along one dimension
     quad_points.resize(quadRule); quad_weight.resize(quadRule);
@@ -332,7 +332,27 @@ void FEM<dim>::setup_system() {
     quad_weight[0] = 1.; //EDIT
     quad_weight[1] = 1.; //EDIT
 #endif
-    //Just some notes...
+   // quadRule = 1; //EDIT - Number of quadrature points along one dimension
+   //  quad_points.resize(quadRule); quad_weight.resize(quadRule);
+
+   //  quad_points[0] = 0.0; //EDIT
+
+   //  quad_weight[0] = 2.0; //EDIT
+    //  quadRule = 5; //EDIT - Number of quadrature points along one dimension
+    // quad_points.resize(quadRule); quad_weight.resize(quadRule);
+
+    // quad_points[0] = 0.0;
+    // quad_points[1] = -(1.0 / 3.0) * sqrt(5.0 - 2.0 * sqrt(10.0 / 7.0)); //EDIT
+    // quad_points[2] = +(1.0 / 3.0) * sqrt(5.0 - 2.0 * sqrt(10.0 / 7.0));
+    // quad_points[3] = -(1.0 / 3.0) * sqrt(5.0 + 2.0 * sqrt(10.0 / 7.0));
+    // quad_points[4] = +(1.0 / 3.0) * sqrt(5.0 + 2.0 * sqrt(10.0 / 7.0));
+
+    // quad_weight[0] = 128.0 / 225.0;
+    // quad_weight[1] = (322.0 + 13.0 * sqrt(70.0)) / 900.0; //EDIT
+    // quad_weight[2] = (322.0 + 13.0 * sqrt(70.0)) / 900.0; //EDIT
+    // quad_weight[3] = (322.0 - 13.0 * sqrt(70.0)) / 900.0;
+    // quad_weight[4] = (322.0 - 13.0 * sqrt(70.0)) / 900.0;   
+    // //Just some notes...
     std::cout << "   Number of active elems:       " << triangulation.n_active_cells() << std::endl;
     std::cout << "   Number of degrees of freedom: " << dof_handler.n_dofs() << std::endl;
 }
