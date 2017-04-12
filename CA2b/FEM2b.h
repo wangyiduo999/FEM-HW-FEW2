@@ -254,8 +254,10 @@ void FEM<dim>::define_boundary_conds() {
     for (int globalNodeIndex = 0; globalNodeIndex < totalNodes; globalNodeIndex++) {
         if (nodeLocation[globalNodeIndex][0] == 0) {
             boundary_values[globalNodeIndex] = 300.0 * (1 + c0 * (nodeLocation[globalNodeIndex][1] + nodeLocation[globalNodeIndex][2]));
+            // printf("globalNodeIndex = %d, boundary_value = %lf\n", globalNodeIndex, boundary_values[globalNodeIndex]);
         } else if (nodeLocation[globalNodeIndex][0] == 0.04) {
             boundary_values[globalNodeIndex] = 310.0 * (1 + c0 * (nodeLocation[globalNodeIndex][1] + nodeLocation[globalNodeIndex][2]));
+            // printf("globalNodeIndex = %d, boundary_value = %lf\n", globalNodeIndex, boundary_values[globalNodeIndex]);
         }
     }
 }
@@ -437,9 +439,9 @@ void FEM<dim>::assemble_system() {
                                     for (unsigned int I = 0; I < dim; I++) {
                                         for (unsigned int J = 0; J < dim; J++) {
                                             //EDIT - Define Klocal. You will need to use the inverse Jacobian ("invJacob") and "detJ"
-                                            Klocal[A][B] -= detJ * kappa[I][J] * \
-                                                            (basis_gradient(A, quad_points[q1], quad_points[q2], quad_points[q3])[i]) * invJacob[i][I] * \
-                                                            (basis_gradient(B, quad_points[q1], quad_points[q2], quad_points[q3])[j]) * invJacob[j][J] * \
+                                            Klocal[A][B] -= detJ * kappa[I][J] * 
+                                                            (basis_gradient(A, quad_points[q1], quad_points[q2], quad_points[q3])[i]) * invJacob[i][I] * 
+                                                            (basis_gradient(B, quad_points[q1], quad_points[q2], quad_points[q3])[j]) * invJacob[j][J] * 
                                                             quad_weight[q1] * quad_weight[q2] * quad_weight[q3];
                                         }
                                     }
